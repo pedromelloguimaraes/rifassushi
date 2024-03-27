@@ -24,25 +24,27 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <script async>
-        async function submission(){
-            numero = document.getElementById("numero").innerHTML
-            nome = document.getElementById("nome").innerHTML
-            contato = document.getElementById("contato").innerHTML
 
+        async function submission(){
+            nome = document.getElementById("nome").value
+            contato = document.getElementById("contato").value
+            for(i = 0; i <= n; i++){
             let data1 = JSON.stringify({
                 "collection": "rifas",
                 "database": "rifasSushi",
                 "dataSource": "SkillDislexicos",
                 "document": {
-                    "numero": numero,
+                    "numero": document.getElementById(`numero${i}`).value,
                     "nome": nome,
                     "contato": contato
                 }
             })
 
+            const url = 'https://corsproxy.io/?' + encodeURIComponent('https://sa-east-1.aws.data.mongodb-api.com/app/data-aeokt/endpoint/data/v1/action/insertOne');
+
             let config1 = {
                 method: 'post',
-                url: 'https://sa-east-1.aws.data.mongodb-api.com/app/data-aeokt/endpoint/data/v1/action/insertOne',
+                url: url,
                 timeout: 6500,
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,12 +56,16 @@
                     
             await axios(config1)
                 .then(function (response1){
-                    window.location.reload()
                 })
                 .catch(function (error){
                     alert('Não funcionou.')
                     //window.location.reload()
                 })
+
+            if(i == n){
+                window.location.reload
+            }
+            }
     }
     </script>
 </head>
@@ -67,8 +73,11 @@
     <h1>
         RIFAS
     </h1>
+    <div id="rifasForm">
     Número:
-    <input type="number" id="numero" placeholder="Número da rifa"/>
+    <input type="number" id="numero0" placeholder="Número da rifa"/>
+    </div>
+    <button id="addButton" onclick="addInputField()">+</button>
     <br>
     <br>
     Nome:
@@ -81,3 +90,22 @@
     <br>
     <button id="submission" onclick="submission()">Enviar</button>
 </body>
+<script>
+    let n = 0
+
+    function addInputField() {
+        n++
+        const container = document.getElementById('rifasForm');
+
+        // Create a new input element
+        const newInput = document.createElement('input');
+
+        // Set attributes for the input element
+        newInput.setAttribute('type', 'number');
+        newInput.setAttribute('placeholder', 'Número da rifa');
+        newInput.id = `numero${n}`
+
+        // Append the new input element to the form
+        container.appendChild(newInput);
+    }
+</script>
