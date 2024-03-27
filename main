@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<head>
+    <title>Rifas Sushi Trip - DaVinci em Vix</title>
+    <style>
+        body{
+            font-size: xx-large;
+            background-color: bisque;
+            color: rgb(163, 0, 33);
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        h1{
+            text-align: center;
+            font-size: xx-large;
+            font-weight: bolder;
+        }
+
+        input, button{
+            border-radius: 10px;
+            width: 25%;
+            height: 30px;
+            border-color: transparent;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+    <script async>
+        async function submission(){
+            numero = document.getElementById("numero").innerHTML
+            nome = document.getElementById("nome").innerHTML
+            contato = document.getElementById("contato").innerHTML
+
+            let data1 = JSON.stringify({
+                "collection": "rifas",
+                "database": "rifasSushi",
+                "dataSource": "SkillDislexicos",
+                "document": {
+                    "numero": numero,
+                    "nome": nome,
+                    "contato": contato
+                }
+            })
+
+            let config1 = {
+                method: 'post',
+                url: 'https://sa-east-1.aws.data.mongodb-api.com/app/data-aeokt/endpoint/data/v1/action/insertOne',
+                timeout: 6500,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Request-Headers': '*',
+                    'api-key': '610JXzbpIjJgn1DyN9HjPNVlMVrHNRUnN66fGIcc5IkOfCVLZYjHtT385XARwfkR'
+                },
+                data: data1
+            };
+                    
+            await axios(config1)
+                .then(function (response1){
+                    window.location.reload()
+                })
+                .catch(function (error){
+                    alert('Não funcionou.')
+                    //window.location.reload()
+                })
+    }
+    </script>
+</head>
+<body>
+    <h1>
+        RIFAS
+    </h1>
+    Número:
+    <input type="number" id="numero" placeholder="Número da rifa"/>
+    <br>
+    <br>
+    Nome:
+    <input type="text" id="nome" placeholder="Nome do comprador"/>
+    <br>
+    <br>
+    Contato:
+    <input type="text" id="contato" placeholder="Forma de contato"/>
+    <br>
+    <br>
+    <button id="submission" onclick="submission()">Enviar</button>
+</body>
