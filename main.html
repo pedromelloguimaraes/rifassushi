@@ -56,15 +56,12 @@
                     
             await axios(config1)
                 .then(function (response1){
+                    if(i == n){window.location.reload()}
                 })
                 .catch(function (error){
                     alert('Não funcionou.')
                     //window.location.reload()
                 })
-
-            if(i == n){
-                window.location.reload
-            }
             }
     }
     </script>
