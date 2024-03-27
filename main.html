@@ -24,7 +24,7 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <script async>
-
+        let n = 0
         async function submission(){
             nome = document.getElementById("nome").value
             contato = document.getElementById("contato").value
@@ -56,12 +56,15 @@
                     
             await axios(config1)
                 .then(function (response1){
-                    if(i == n){window.location.reload()}
                 })
                 .catch(function (error){
                     alert('Não funcionou.')
                     //window.location.reload()
                 })
+
+            if(i == n){
+                window.location.reload()
+            }
             }
     }
     </script>
@@ -88,8 +91,6 @@
     <button id="submission" onclick="submission()">Enviar</button>
 </body>
 <script>
-    let n = 0
-
     function addInputField() {
         n++
         const container = document.getElementById('rifasForm');
